@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hello / World — 3D Wireframe Minimalist Experience</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Perspective container for the 3D rotating box */
+        .scene-container {
+            perspective: 1200px;
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* 3D Rotating Box wrapper */
+        .cube-3d {
+            position: relative;
+            width: 380px;
+            height: 380px;
+            transform-style: preserve-3d;
+            animation: rotateCube 25s infinite linear;
+        }
+
+        @keyframes rotateCube {
+            0% {
+                transform: rotateX(15deg) rotateY(0deg) rotateZ(0deg);
+            }
+            50% {
+                transform: rotateX(45deg) rotateY(180deg) rotateZ(10deg);
+            }
+            100% {
+                transform: rotateX(15deg) rotateY(360deg) rotateZ(0deg);
+            }
+        }
+
+        /* Individual faces of the wireframe cube */
+        .cube-face {
+            position: absolute;
+            width: 380px;
+            height: 380px;
+            border: 1px dotted rgba(255, 255, 255, 0.18);
+            background: transparent;
+        }
+
+        /* Positioning the faces in 3D space */
+        .face-front  { transform: translateZ(190px); }
+        .face-back   { transform: rotateY(180deg) translateZ(190px); }
+        .face-right  { transform: rotateY(90deg) translateZ(190px); }
+        .face-left   { transform: rotateY(-90deg) translateZ(190px); }
+        .face-top    { transform: rotateX(90deg) translateZ(190px); }
+        .face-bottom { transform: rotateX(-90deg) translateZ(190px); }
+
+        /* Ensure hero content stays cleanly above the 3D canvas background */
+        .hero-content {
+            position: relative;
+            z-index: 10;
+        }
+    </style>
+</head>
+<body class="bg-[#050507] text-zinc-100 font-sans antialiased min-h-screen flex flex-col justify-between selection:bg-white selection:text-black overflow-x-hidden">
+
+    <!-- 3D Background Wireframe Box -->
+    <div class="scene-container">
+        <div class="cube-3d">
+            <div class="cube-face face-front"></div>
+            <div class="cube-face face-back"></div>
+            <div class="cube-face face-right"></div>
+            <div class="cube-face face-left"></div>
+            <div class="cube-face face-top"></div>
+            <div class="cube-face face-bottom"></div>
+        </div>
+    </div>
+
+    <!-- Header Navigation -->
+    <header class="w-full max-w-7xl mx-auto px-6 py-8 flex justify-between items-center hero-content">
+        <div class="flex items-center space-x-3">
+            <div class="w-2 h-2 rounded-full bg-white"></div>
+            <span class="font-mono text-xs tracking-widest text-zinc-500 uppercase">SYS // 3D WIREFRAME</span>
+        </div>
+        <nav class="hidden md:flex items-center space-x-8 text-sm font-medium text-zinc-400">
+            <a href="#about" class="hover:text-white transition-colors">About</a>
+            <a href="#geometry" class="hover:text-white transition-colors">Geometry</a>
+        </nav>
+        <div>
+            <button onclick="triggerNotification()" class="px-4 py-2 text-xs font-mono tracking-wider uppercase border border-zinc-800 bg-zinc-900/50 hover:bg-zinc-800 text-zinc-300 rounded-lg transition-all shadow-sm">
+                Initialize
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Hero Section -->
+    <main class="flex-grow flex flex-col items-center justify-center px-6 text-center my-auto py-12 hero-content">
+        
+        <!-- Status Pill -->
+        <div class="inline-flex items-center space-x-2 px-3 py-1 mb-8 rounded-full bg-zinc-900/80 border border-zinc-800/80 text-xs font-mono text-zinc-400 backdrop-blur-md">
+            <span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span>
+            <span>Minimalist Typography & Rotating Wireframe</span>
+        </div>
+
+        <!-- Big Stacked Hero Text: Hello / World -->
+        <div class="select-none my-2">
+            <h1 class="text-7xl sm:text-9xl md:text-[11rem] font-black tracking-tighter leading-none text-white uppercase">
+                Hello
+            </h1>
+            <h1 class="text-7xl sm:text-9xl md:text-[11rem] font-black tracking-tighter leading-none text-white uppercase mt-1 sm:mt-2 opacity-90">
+                World
+            </h1>
+        </div>
+
+        <!-- Subtitle Description -->
+        <p class="max-w-md mx-auto text-zinc-400 text-sm md:text-base font-light mt-10 leading-relaxed">
+            Clean architectural structure featuring pure stacked text layers framed within an infinite 3D dotted wireframe space.
+        </p>
+
+        <!-- Call to Action Buttons -->
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mt-10 w-full max-w-md">
+            <a href="#geometry" class="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-white text-zinc-950 font-semibold text-xs tracking-wider uppercase hover:bg-zinc-200 transition-all text-center">
+                View Geometry
+            </a>
+            <button onclick="copySnippet()" class="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-zinc-900/80 border border-zinc-800 text-zinc-300 font-mono text-xs hover:bg-zinc-800 hover:text-white transition-all text-center backdrop-blur-sm">
+                Copy Markup
+            </button>
+        </div>
+    </main>
+
+    <!-- Geometry Section -->
+    <section id="geometry" class="w-full max-w-5xl mx-auto px-6 py-20 border-t border-zinc-900/80 hero-content">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="p-8 rounded-2xl bg-zinc-900/30 border border-zinc-800/50 backdrop-blur-sm">
+                <span class="font-mono text-xs text-zinc-500 mb-2 block">01 / STACKED TYPE</span>
+                <h3 class="text-base font-semibold text-zinc-200 mb-2">Absolute Clarity</h3>
+                <p class="text-sm text-zinc-400 font-light leading-relaxed">Uncompromising typography separated cleanly onto independent grid lines with a unified monochromatic palette.</p>
+            </div>
+            <div class="p-8 rounded-2xl bg-zinc-900/30 border border-zinc-800/50 backdrop-blur-sm">
+                <span class="font-mono text-xs text-zinc-500 mb-2 block">02 / 3D SPACE</span>
+                <h3 class="text-base font-semibold text-zinc-200 mb-2">Wireframe Dotted Cube</h3>
+                <p class="text-sm text-zinc-400 font-light leading-relaxed">Pure CSS 3D transform perspectives establishing depth and atmosphere with thin dotted grid boundaries.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="w-full max-w-7xl mx-auto px-6 py-8 border-t border-zinc-900/80 flex flex-col sm:flex-row justify-between items-center text-xs text-zinc-600 hero-content">
+        <p>&copy; 2026 Minimalist Studio.</p>
+        <p class="font-mono mt-2 sm:mt-0">3D Wireframe Edition</p>
+    </footer>
+
+    <!-- Custom Notification Box -->
+    <div id="toast" class="fixed bottom-6 right-6 transform translate-y-24 opacity-0 transition-all duration-300 z-50 bg-zinc-900 border border-zinc-800 text-zinc-200 px-5 py-3 rounded-xl shadow-2xl flex items-center space-x-3">
+        <div class="w-2 h-2 rounded-full bg-white"></div>
+        <span id="toast-message" class="text-xs font-mono">System initialized successfully.</span>
+    </div>
+
+    <!-- JavaScript Controllers -->
+    <script>
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            const msgEl = document.getElementById('toast-message');
+            msgEl.textContent = message;
+            toast.classList.remove('translate-y-24', 'opacity-0');
+            setTimeout(() => {
+                toast.classList.add('translate-y-24', 'opacity-0');
+            }, 3000);
+        }
+
+        function triggerNotification() {
+            showToast("3D wireframe ambient field online.");
+        }
+
+        function copySnippet() {
+            const snippet = `<h1 class="text-9xl font-black text-white uppercase">Hello</h1>\n<h1 class="text-9xl font-black text-white uppercase">World</h1>`;
+            document.execCommand('copy');
+            showToast("Copied stacked typography markup to clipboard!");
+        }
+    </script>
+</body>
+</html>
